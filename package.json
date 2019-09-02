@@ -1,0 +1,102 @@
+{
+  "name": "preact-testing-library",
+  "version": "0.0.0-development",
+  "description": "Simple and complete Preact DOM testing utilities that encourage good testing practices.",
+  "main": "dist/index.js",
+  "module": "dist/preact-testing-library.esm.js",
+  "homepage": "https://github.com/mihar-22/preact-testing-library#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mihar-22/preact-testing-library"
+  },
+  "bugs": {
+    "url": "https://github.com/mihar-22/preact-testing-library/issues"
+  },
+  "scripts": {
+    "lint": "eslint {src,tests,build}/**/*.js --fix",
+    "build": "rollup -c build/build.js",
+    "test": "jest src/ ",
+    "test:watch": "jest src/ --watch",
+    "test:update": "yarn test -- --updateSnapshot --coverage",
+    "setup": "npm install && npm run validate",
+    "validate": "npm-run-all lint test build"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.5.5",
+    "@testing-library/dom": "^6.1.0",
+    "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@testing-library/jest-dom": "^4.1.0",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "jest": "^24.9.0",
+    "jest-watch-typeahead": "^0.4.0",
+    "lint-staged": "^9.2.5",
+    "preact": "^10.0.0-rc.1",
+    "rollup": "^1.20.3",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "semantic-release": "^15.13.24"
+  },
+  "peerDependencies": {
+    "preact": ">=10 || ^10.0.0-alpha.0 || ^10.0.0-beta.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "npm run lint",
+      "npm run test:update",
+      "npm run build",
+      "git add"
+    ]
+  },
+  "jest": {
+    "setupFiles": [
+      "tests/setup-env.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "watchPlugins": [
+      "typeahead/filename",
+      "typeahead/testname"
+    ]
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "testing",
+    "preact",
+    "ui",
+    "dom",
+    "jsdom",
+    "unit",
+    "integration",
+    "functional",
+    "end-to-end",
+    "e2e"
+  ],
+  "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
+  "license": "MIT"
+}
