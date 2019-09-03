@@ -10,7 +10,7 @@
   />
 </a>
 
-<p>Simple and complete Preact (v10+) DOM testing utilities that encourage good testing
+<p>Simple and complete Preact DOM testing utilities that encourage good testing
 practices.</p>
 
 > Inspired completely by [react-testing-library][react-testing-library]
@@ -31,7 +31,6 @@ practices.</p>
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Overview](#overview)
 - [Installation](#installation)
 - [Examples](#examples)
@@ -47,10 +46,18 @@ practices.</p>
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Overview
+## The Problem
 
-To see why the library exists and the guiding principles please checkout
- [react-testing-library][react-testing-library] and [guiding principles][guiding-principle].
+You want to write maintainable tests for your Preact components. As a part of this goal, you want
+ your tests to avoid including implementation details of your components and rather focus on making your tests give you the confidence for which they are intended. As part of this, you want your testbase to be maintainable in the long run so refactors of your components (changes to implementation but not functionality) don't break your tests and slow you and your team down.
+ 
+## The Solution
+
+The Peact Testing Library is a very lightweight solution for testing Preact components. It
+ provides light utility functions on top of preact/test-utils, in a way that encourages better
+ testing practices. Its primary guiding principle is:
+ 
+ > [The more your tests resemble the way your software is used, the more confidence they can give you.](https://twitter.com/kentcdodds/status/977018512689455106)
 
 ## Installation
 
@@ -58,30 +65,110 @@ This module is distributed via [npm][npm] which is bundled with [node][node] and
 should be installed as one of your project's `devDependencies`:
 
 ```
-npm install --save-dev preact-testing-library@next
+npm install --save-dev preact-testing-library-next
 ```
 
 This library has `peerDependencies` listings for `preact`.
 
-You may also be interested in installing `@testing-library/jest-dom` so you can
+💡 You may also be interested in installing `@testing-library/jest-dom` so you can
 use [the custom jest matchers](https://github.com/testing-library/jest-dom).
 
-## Examples
+ 📝 This library supports Preact X (10.x). It takes advantage of the `act` test utility in
+  `preact/test-utils` to enable both Preact Hook and Class components to be easily tested. 
 
-### Basic Example
+  📝 The library unmounts your rendered components and cleans up the container after each test
+ automatically. If you'd like to disable this then set `process.env.PTL_SKIP_AUTO_CLEANUP` to
+ true when running your tests. 
+ 
+## Example
 
+#### Component
+
+*Note: Preact Testing Library works with both Preact Hooks and Classes. Your
+ tests will be the same however you write your components.*
 ```jsx
-Code here
+function HiddenMessage({ children }) {
+  const [showMessage, setShowMessage] = useState(false);
+
+  return (
+    <div>
+      <label htmlFor="toggle">Show Message</label>
+      <input
+        id="toggle"
+        type="checkbox"
+        onChange={e => setShowMessage(e.target.checked)}
+        checked={showMessage}
+      />
+      {showMessage ? children : null}
+    </div>
+  )
+}
 ```
 
-### More Examples
+#### Test
 
-For more examples see [react-testing-library][react-testing-library]. It should be really easy to
-map the examples from React to Preact.
+```jsx
+// NOTE: jest-dom adds handy assertions to Jest and it is recommended, but not required.
+import '@testing-library/jest-dom/extend-expect'
+
+import { h } from 'preact';
+import { render, fireEvent } from 'preact-testing-library-next';
+import HiddenMessage from '../hidden-message';
+
+test('shows the children when the checkbox is checked', () => {
+  const testMessage = 'Test Message';
+
+  const { queryByText, getByLabelText, getByText } = render(
+    <HiddenMessage>{testMessage}</HiddenMessage>,
+  );
+
+  // query* functions will return the element or null if it cannot be found.
+  // get* functions will return the element or throw an error if it cannot be found.
+  expect(queryByText(testMessage)).toBeNull()
+
+  // The queries can accept a regex to make your selectors more resilient to content tweaks and changes.
+  fireEvent.click(getByLabelText(/show/i))
+
+  // .toBeInTheDocument() is an assertion that comes from jest-dom.
+  // Otherwise you could use .toBeDefined().
+  expect(getByText(testMessage)).toBeInTheDocument()
+})
+```
+## Hooks
+
+If you are interested in testing a custom hook, the preact-hooks-testing-library will be coming
+ soon.
+
+> It is not recommended to test single-use custom hooks in isolation from the components where it's
+> being used. It's better to test the component that's using the hook rather than the hook
+> itself. The preact-hooks-testing-library is intended to be used for reusable hooks
+>/libraries.
+
+## Guiding Principles
+
+We try to only expose methods and utilities that encourage you to write tests that closely
+ resemble how your Preact components are used.
+
+Utilities are included in this project based on the following [guiding principles](https://twitter.com/kentcdodds/status/977018512689455106).
 
 ## Docs
 
-Checkout the react-testing-library [documentation][react-testing-library-docs].
+For more information checkout:
+
+* The react-testing-library [documentation][react-testing-library-docs].
+* The react-testing-library [sandbox](https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples).
+* Extend Jest with [custom matchers](https://github.com/testing-library/jest-dom) to test the
+state of the DOM.
+* The testing library [documentation](https://testing-library.com/docs/intro).
+    * [Queries](https://testing-library.com/docs/dom-testing-library/api-queries).
+    * [Events](https://testing-library.com/docs/dom-testing-library/api-events).
+
+Even though they are all React based examples, it should be close to identical in Preact. Take
+ note of the [differences between React and Preact](https://preactjs.com/guide/v10/differences-to-react). 
+ 
+ 📝 Keep in mind that React uses a Synthetic event system, and Preact uses the
+browser's native `addEventListener` for event handling. This means events like `onChange` and
+`onDoubleClick` in React, are `onInput` and `onDblClick` in Preact. 
 
 ## Issues
 
