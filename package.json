@@ -13,7 +13,7 @@
     "url": "https://github.com/mihar-22/preact-testing-library/issues"
   },
   "scripts": {
-    "lint": "eslint {src,tests,build}/**/*.js --fix",
+    "lint": "eslint {src,build}/**/*.js --fix",
     "build": "rollup -c build/build.js",
     "test": "jest src/ ",
     "test:watch": "jest src/ --watch",
@@ -67,9 +67,6 @@
     ]
   },
   "jest": {
-    "setupFiles": [
-      "tests/setup-env.js"
-    ],
     "coverageThreshold": {
       "global": {
         "branches": 100,
