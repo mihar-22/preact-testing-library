@@ -1,51 +1,106 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import alias from 'rollup-plugin-alias';
-import autoExternal from 'rollup-plugin-auto-external';
+import { transformSync } from '@babel/core';
+import cjsModulesTransform from '@babel/plugin-transform-modules-commonjs';
+import umdModulesTransform from '@babel/plugin-transform-modules-umd';
+import fs from 'fs';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 
-import pkg from '../package.json';
 import banner from './banner';
 
-const input = 'src/index.js';
+const defaultGlobals = {
+  preact: 'preact'
+};
 
-const output = (file, format, globals) => ({
-  banner,
-  name: pkg.name,
-  file,
-  format,
-  globals: { preact: 'preact', ...globals }
-});
+const rollup = (
+  input = './src/index.js',
+  outputPrefix = 'pure',
+  extraGlobals = {},
+) => {
+  const globals = {
+    ...defaultGlobals,
+    ...extraGlobals
+  };
 
-const plugins = [
-  alias({
-    react: 'preact/compat',
-    'react-dom': 'preact/compat'
-  }),
-  resolve(),
-  babel({
-    runtimeHelpers: true,
-    externalHelpers: true
-  }),
-  commonjs({ include: 'node_modules/**' })
-];
+  const external = (id) => Object.prototype.hasOwnProperty.call(globals, id);
 
-export default [
-  {
+  const outputFile = (format) => `./dist/${outputPrefix}.${format}.js`;
+
+  const fromSource = (format) => ({
     input,
-    output: output('dist/pure.umd.js', 'umd'),
-    plugins,
-    external: ['preact']
-  },
-  {
-    input,
-    output: [
-      output(pkg.main, 'es'),
-      output(pkg.module, 'esm'),
-      output('dist/pure.cjs.js', 'cjs')
-    ],
-    plugins: plugins.concat([autoExternal()])
-  }
-];
+    external,
+    output: {
+      banner,
+      file: outputFile(format),
+      format,
+      sourcemap: true,
+    },
+    plugins: [
+      resolve({
+        extensions: ['.js'],
+        module: true,
+      }),
+      commonjs({
+        include: 'node_modules/**'
+      }),
+      babel({
+        runtimeHelpers: true,
+        externalHelpers: true,
+        exclude: ['node_modules/**']
+      })
+    ]
+  });
+
+  const fromESM = (toFormat) => ({
+    input: outputFile('esm'),
+    output: {
+      banner,
+      file: outputFile(toFormat),
+      format: 'esm',
+      sourcemap: false,
+    },
+    // The UMD bundle expects `this` to refer to the global object. By default
+    // Rollup replaces `this` with `undefined`, but this default behavior can
+    // be overridden with the `context` option.
+    context: 'this',
+    plugins: [{
+      // @see https://github.com/apollographql/apollo-client/issues/4843#issuecomment-495717720
+      transform(source, id) {
+        const output = transformSync(source, {
+          inputSourceMap: JSON.parse(fs.readFileSync(`${id}.map`)),
+          sourceMaps: true,
+          plugins: [
+            [toFormat === 'umd' ? umdModulesTransform : cjsModulesTransform, {
+              loose: true,
+              allowTopLevelThis: true,
+            }],
+          ],
+        });
+
+        // There doesn't seem to be any way to get Rollup to emit a source map
+        // that goes all the way back to the source file (rather than just to
+        // the bundle.esm.js intermediate file), so we pass sourcemap:false in
+        // the output options above, and manually write the CJS and UMD source
+        // maps here.
+        fs.writeFileSync(
+          `${outputFile(toFormat)}.map`,
+          JSON.stringify(output.map),
+        );
+
+        return {
+          code: output.code,
+        };
+      }
+    }],
+  });
+
+  return [
+    fromSource('esm'),
+    fromESM('cjs'),
+    fromESM('umd'),
+  ];
+};
+
+export default rollup();
