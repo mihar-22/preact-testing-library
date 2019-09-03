@@ -15,9 +15,12 @@ practices.</p>
 
 > Inspired completely by [react-testing-library][react-testing-library]
 
-<br>
-[![Build Status](https://travis-ci.org/mihar-22/preact-testing-library.svg?branch=master)](https://travis-ci.org/mihar-22/preact-testing-library)
-<br>
+[![Build Status][build-badge]][build]
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![PRs Welcome][prs-badge]][prs] 
+[![Code of Conduct][coc-badge]][coc]
+[![version][version-badge]][package]
+[![MIT License][license-badge]][license]
 </div>
 
 <hr />
@@ -133,8 +136,13 @@ Contributions of any kind welcome!
 
 [npm]: https://www.npmjs.com
 [node]: https://nodejs.org
+[build]: https://travis-ci.org/mihar-22/preact-testing-library-next
+[build-badge]: https://travis-ci.org/mihar-22/preact-testing-library.svg?branch=master
+[package]: https://www.npmjs.com/package/preact-testing-library-next
+[version-badge]: https://img.shields.io/npm/v/preact-testing-library-next
 [slack]: https://preact-slack.now.sh
 [license]: https://github.com/mihar-22/preact-testing-library/blob/master/LICENSE
+[license-badge]: https://img.shields.io/aur/license/preact-testing-library-next
 [emojis]: https://github.com/all-contributors/all-contributors#emoji-key
 [all-contributors]: https://github.com/all-contributors/all-contributors
 [guiding-principle]: https://twitter.com/kentcdodds/status/977018512689455106
@@ -144,5 +152,9 @@ Contributions of any kind welcome!
 [stackoverflow]: https://stackoverflow.com/questions/tagged/preact-testing-library
 [react-testing-library]: https://github.com/testing-library/react-testing-library
 [react-testing-library-docs]: https://testing-library.com/docs/react-testing-library/intro
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[prs]: http://makeapullrequest.com
+[coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+[coc]: https://github.com/mihar-22/preact-testing-library/blob/master/CODE_OF_CONDUCT.md
 
 <!-- prettier-ignore-end -->
