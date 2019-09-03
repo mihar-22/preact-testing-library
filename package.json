@@ -20,9 +20,9 @@
     "test": "jest src/__tests__ ",
     "test:watch": "jest src/__tests__ --watch",
     "test:update": "yarn test --updateSnapshot --coverage",
-    "copy:type": "copyfiles typings/index.d.ts dist -f",
+    "copy:types": "copyfiles typings/index.d.ts dist -f",
     "setup": "npm install && npm run validate",
-    "validate": "npm-run-all lint test build copy:type"
+    "validate": "npm-run-all lint test:update build copy:types"
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
@@ -69,7 +69,10 @@
   },
   "lint-staged": {
     "**/*.js": [
-      "npm run validate",
+      "npm run lint",
+      "npm run test:update",
+      "npm run build",
+      "npm run copy:types",
       "git add"
     ]
   },
