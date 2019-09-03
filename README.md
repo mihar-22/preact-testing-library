@@ -143,7 +143,7 @@ Contributions of any kind welcome!
 [version-badge]: https://img.shields.io/npm/v/preact-testing-library-next
 [slack]: https://preact-slack.now.sh
 [license]: https://github.com/mihar-22/preact-testing-library/blob/master/LICENSE
-[license-badge]: https://img.shields.io/aur/license/preact-testing-library-next
+[license-badge]: https://img.shields.io/github/license/mihar-22/preact-testing-library?color=b
 [emojis]: https://github.com/all-contributors/all-contributors#emoji-key
 [all-contributors]: https://github.com/all-contributors/all-contributors
 [guiding-principle]: https://twitter.com/kentcdodds/status/977018512689455106
