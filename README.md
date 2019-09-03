@@ -10,11 +10,14 @@
   />
 </a>
 
-<p>Simple and complete Preact DOM testing utilities that encourage good testing
+<p>Simple and complete Preact (v10+) DOM testing utilities that encourage good testing
 practices.</p>
 
 > Inspired completely by [react-testing-library][react-testing-library]
 
+<br>
+[![Build Status](https://travis-ci.org/mihar-22/preact-testing-library.svg?branch=master)](https://travis-ci.org/mihar-22/preact-testing-library)
+<br>
 </div>
 
 <hr />
