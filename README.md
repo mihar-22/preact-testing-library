@@ -21,6 +21,7 @@ practices.</p>
 [![Code of Conduct][coc-badge]][coc]
 [![version][version-badge]][package]
 [![MIT License][license-badge]][license]
+[![Preact Slack Community][preact-slack-badge]][preact-slack]
 </div>
 
 <hr />
@@ -156,5 +157,6 @@ Contributions of any kind welcome!
 [prs]: http://makeapullrequest.com
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
 [coc]: https://github.com/mihar-22/preact-testing-library/blob/master/CODE_OF_CONDUCT.md
-
+[preact-slack]: https://preact-slack.now.sh/
+[preact-slack-badge]: https://preact-slack.now.sh/badge.svg
 <!-- prettier-ignore-end -->

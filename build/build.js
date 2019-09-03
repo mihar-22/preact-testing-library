@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
+import alias from 'rollup-plugin-alias';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
@@ -15,6 +16,10 @@ const build = (file, format) => ({
     format
   },
   plugins: [
+    alias({
+      react: 'preact/compat',
+      'react-dom': 'preact/compat'
+    }),
     resolve(),
     babel({
       runtimeHelpers: true,
