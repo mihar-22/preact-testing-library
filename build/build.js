@@ -89,11 +89,13 @@ const rollup = (
 };
 
 export default [
-  rollup('esm', { outputPrefix: 'index' }),
+  rollup('esm', {}),
   rollup('umd', {
     extraGlobals: {
       'preact/test-utils': 'PreactTestUtils'
     }
   }),
-  rollup('cjs', {})
+  rollup('cjs', {
+    outputPrefix: 'index'
+  })
 ];
