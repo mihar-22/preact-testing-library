@@ -1,106 +1,99 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import { transformSync } from '@babel/core';
-import cjsModulesTransform from '@babel/plugin-transform-modules-commonjs';
-import umdModulesTransform from '@babel/plugin-transform-modules-umd';
-import fs from 'fs';
+import path from 'path';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
+import replace from 'rollup-plugin-replace';
 
+import pkg from '../package.json';
 import banner from './banner';
 
-const defaultGlobals = {
-  preact: 'preact'
-};
+const { sizeSnapshot } = require('rollup-plugin-size-snapshot');
 
 const rollup = (
-  input = './src/index.js',
-  outputPrefix = 'pure',
-  extraGlobals = {},
+  format,
+  {
+    input = './src/index.js',
+    outputPrefix = `pure.${format}`,
+    extraGlobals = {},
+  }
 ) => {
-  const globals = {
-    ...defaultGlobals,
-    ...extraGlobals
+  const defaultGlobals = Object.keys(pkg.peerDependencies || {}).reduce(
+    (deps, dep) => {
+      deps[dep] = dep;
+      return deps;
+    },
+    {},
+  );
+
+  const file = `dist/${outputPrefix}.js`;
+  const globals = { ...defaultGlobals, ...extraGlobals };
+  const deps = Object.keys(pkg.dependencies || {});
+  const peerDeps = Object.keys(pkg.peerDependencies || {});
+  const defaultExternal = (format === 'umd') ? peerDeps : deps.concat(peerDeps);
+  const externalPattern = new RegExp(`^(${defaultExternal.join('|')})($|/)`);
+
+  const externalPredicate = (id) => {
+    const isDep = defaultExternal.length > 0 && externalPattern.test(id);
+
+    if (format === 'umd') {
+      // For UMD, we want to bundle all non-peer deps.
+      return isDep;
+    }
+
+    // For ESM/CJs we want to make all node_modules external.
+    const isNodeModule = id.includes('node_modules');
+    const isRelative = id.startsWith('.');
+    return isDep || (!isRelative && !path.isAbsolute(id)) || isNodeModule;
   };
 
-  const external = (id) => Object.prototype.hasOwnProperty.call(globals, id);
+  const output = {
+    name: pkg.name,
+    banner,
+    file,
+    format: (format === 'esm') ? 'es' : format,
+    exports: (format === 'esm') ? 'named' : 'auto',
+    globals
+  };
 
-  const outputFile = (format) => `./dist/${outputPrefix}.${format}.js`;
+  const replacements = Object.entries(process.env).reduce((acc, [key, value]) => {
+    let val;
+    if (value === 'true' || value === 'false' || Number.isInteger(+value)) {
+      val = value;
+    } else {
+      val = JSON.stringify(value);
+    }
+    acc[`process.env.${key}`] = val;
+    return acc;
+  }, {});
 
-  const fromSource = (format) => ({
+  return {
     input,
-    external,
-    output: {
-      banner,
-      file: outputFile(format),
-      format,
-      sourcemap: true,
-    },
+    output,
+    external: externalPredicate,
     plugins: [
       resolve({
-        extensions: ['.js'],
-        module: true,
+        preferBuiltins: false,
+        mainFields: ['module', 'main', 'jsnext', 'browser'],
       }),
-      commonjs({
-        include: 'node_modules/**'
-      }),
+      commonjs({ include: 'node_modules/**' }),
       babel({
         runtimeHelpers: true,
         externalHelpers: true,
-        exclude: ['node_modules/**']
-      })
+      }),
+      replace(replacements),
+      sizeSnapshot({ printInfo: false })
     ]
-  });
-
-  const fromESM = (toFormat) => ({
-    input: outputFile('esm'),
-    output: {
-      banner,
-      file: outputFile(toFormat),
-      format: 'esm',
-      sourcemap: false,
-    },
-    // The UMD bundle expects `this` to refer to the global object. By default
-    // Rollup replaces `this` with `undefined`, but this default behavior can
-    // be overridden with the `context` option.
-    context: 'this',
-    plugins: [{
-      // @see https://github.com/apollographql/apollo-client/issues/4843#issuecomment-495717720
-      transform(source, id) {
-        const output = transformSync(source, {
-          inputSourceMap: JSON.parse(fs.readFileSync(`${id}.map`)),
-          sourceMaps: true,
-          plugins: [
-            [toFormat === 'umd' ? umdModulesTransform : cjsModulesTransform, {
-              loose: true,
-              allowTopLevelThis: true,
-            }],
-          ],
-        });
-
-        // There doesn't seem to be any way to get Rollup to emit a source map
-        // that goes all the way back to the source file (rather than just to
-        // the bundle.esm.js intermediate file), so we pass sourcemap:false in
-        // the output options above, and manually write the CJS and UMD source
-        // maps here.
-        fs.writeFileSync(
-          `${outputFile(toFormat)}.map`,
-          JSON.stringify(output.map),
-        );
-
-        return {
-          code: output.code,
-        };
-      }
-    }],
-  });
-
-  return [
-    fromSource('esm'),
-    fromESM('cjs'),
-    fromESM('umd'),
-  ];
+  };
 };
 
-export default rollup();
+export default [
+  rollup('esm', { outputPrefix: 'index' }),
+  rollup('umd', {
+    extraGlobals: {
+      'preact/test-utils': 'PreactTestUtils'
+    }
+  }),
+  rollup('cjs', {})
+];
