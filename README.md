@@ -31,11 +31,15 @@ practices.</p>
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Overview](#overview)
+
+- [The Problem](#the-problem)
+- [The Solution](#the-solution)
 - [Installation](#installation)
-- [Examples](#examples)
-  - [Basic Example](#basic-example)
-  - [More Examples](#more-examples)
+- [Example](#example)
+    - [Component](#component)
+    - [Test](#test)
+- [Hooks](#hooks)
+- [Guiding Principles](#guiding-principles)
 - [Docs](#docs)
 - [Issues](#issues)
   - [🐛 Bugs](#-bugs)
