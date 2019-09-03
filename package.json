@@ -13,6 +13,7 @@
     "url": "https://github.com/mihar-22/preact-testing-library/issues"
   },
   "scripts": {
+    "toc": "node_modules/.bin/doctoc README.md",
     "lint": "eslint {src,build}/**/*.js --fix",
     "build": "rollup -c build/build.js",
     "test": "jest src/__tests__ ",
@@ -35,6 +36,7 @@
     "@testing-library/jest-dom": "^4.1.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
+    "doctoc": "^1.4.0",
     "eslint": "^6.3.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
