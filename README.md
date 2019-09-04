@@ -169,7 +169,6 @@ cb.mockClear();
 fireEvent.click(buttonNode);
 
 // Fire event Option 2.
-
 fireEvent(
 button,
 new Event('MouseEvent', {
