@@ -1,8 +1,4 @@
-import {
-  fireEvent as dtlFireEvent,
-  getQueriesForElement,
-  prettyDOM,
-} from '@testing-library/dom';
+import * as dtl from '@testing-library/dom';
 import { h, hydrate as preactHydrate, render as preactRender } from 'preact';
 import { act as preactAct } from 'preact/test-utils';
 
@@ -50,7 +46,7 @@ function render(
   return {
     container,
     baseElement,
-    debug: (el = baseElement) => console.log(prettyDOM(el)),
+    debug: (el = baseElement) => console.log(dtl.prettyDOM(el)),
     unmount: () => preactRender(null, container),
     rerender: (rerenderUi) => {
       render(wrapUiIfNeeded(rerenderUi), { container, baseElement });
@@ -69,7 +65,7 @@ function render(
       template.innerHTML = container.innerHTML;
       return template.content;
     },
-    ...getQueriesForElement(baseElement, queries),
+    ...dtl.getQueriesForElement(baseElement, queries),
   };
 }
 
@@ -98,27 +94,24 @@ function fireEvent(...args) {
   let returnValue;
 
   preactAct(() => {
-    returnValue = dtlFireEvent(...args);
+    returnValue = dtl.fireEvent(...args);
   });
 
   return returnValue;
 }
 
-Object.keys(dtlFireEvent).forEach((key) => {
+Object.keys(dtl.fireEvent).forEach((key) => {
   fireEvent[key] = (...args) => {
     let returnValue;
 
     preactAct(() => {
-      returnValue = dtlFireEvent[key](...args);
+      returnValue = dtl.fireEvent[key](...args);
     });
 
     return returnValue;
   };
 });
 
-// Re-export everything from dom-testing-library
-export * from '@testing-library/dom';
-
 export {
-  render, cleanup, fireEvent, preactAct as act
+  render, cleanup, fireEvent, preactAct as act, dtl
 };

@@ -83,7 +83,7 @@ use [the custom jest matchers](https://github.com/testing-library/jest-dom).
   📝 The library unmounts your rendered components and cleans up the container after each test
  automatically. If you'd like to disable this then set `process.env.PTL_SKIP_AUTO_CLEANUP` to
  true when running your tests. 
- 
+
 ## Example
 
 #### Component
