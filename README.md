@@ -35,6 +35,12 @@ practices.</p>
 - [The Problem](#the-problem)
 - [The Solution](#the-solution)
 - [Installation](#installation)
+- [Usage](#usage)
+  - [`render`](#render)
+  - [`cleanup`](#cleanup)
+  - [`act`](#act)
+  - [`fireEvent`](#fireevent)
+  - [`dtl`](#dtl)
 - [Example](#example)
     - [Component](#component)
     - [Test](#test)
@@ -82,7 +88,7 @@ use [the custom jest matchers](https://github.com/testing-library/jest-dom).
 
 ## Usage
 
-###`render`
+### `render`
 
 ```jsx
 import { render } from 'preact-testing-library-next';
@@ -108,7 +114,7 @@ render (<YourComponent />, { arguments });
 | `asFragment` | Returns the innerHTML of the container. |
 | `...queries` | Returns all [query functions](https://testing-library.com/docs/dom-testing-library/api-queries) to be used on the baseElement. If you pass in `query` arguments than this will be those, otherwise all. |
 
-###`cleanup`
+### `cleanup`
 
 Unmounts the component from the container and destroys the container.
 

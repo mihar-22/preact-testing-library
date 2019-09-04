@@ -71,6 +71,7 @@
     "**/*.js": [
       "npm run lint",
       "npm run test:update",
+      "npm run toc",
       "git add"
     ]
   },
