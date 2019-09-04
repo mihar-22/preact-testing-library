@@ -193,7 +193,7 @@ fireEvent.input(input, { target: { value: 'a' } });
 expect(handler).toHaveBeenCalledTimes(1);
 ```
 
-```
+```jsx
 const ref = createRef();
 const spy = jest.fn();
 
@@ -219,6 +219,7 @@ Just a convenience export pointing to @testing-library/dom. See the [documentati
 
 *Note: Preact Testing Library works with both Preact Hooks and Classes. Your
  tests will be the same however you write your components.*
+
 ```jsx
 function HiddenMessage({ children }) {
   const [showMessage, setShowMessage] = useState(false);
