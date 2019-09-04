@@ -77,12 +77,136 @@ This library has `peerDependencies` listings for `preact`.
 💡 You may also be interested in installing `@testing-library/jest-dom` so you can
 use [the custom jest matchers](https://github.com/testing-library/jest-dom).
 
- 📝 This library supports Preact X (10.x). It takes advantage of the `act` test utility in
-  `preact/test-utils` to enable both Preact Hook and Class components to be easily tested. 
+📝 This library supports Preact X (10.x). It takes advantage of the `act` test utility in
+  `preact/test-utils` to enable both Preact Hook and Class components to be easily tested.
 
-  📝 The library unmounts your rendered components and cleans up the container after each test
- automatically. If you'd like to disable this then set `process.env.PTL_SKIP_AUTO_CLEANUP` to
- true when running your tests. 
+## Usage
+
+###`render`
+
+```jsx
+import { render } from 'preact-testing-library-next';
+
+render (<YourComponent />, { arguments });
+```
+
+| Arguments | Description | Default |
+| ------------- | ------------- | ------------- |
+| `container`  | The HTML element the component is mounted to. | baseElement |
+| `baseElement`  | The root HTML element to which the container is appended to.  | document.body |
+| `queries` | Queries to bind to the baseElement. See [getQueriesForElement](https://testing-library.com/docs/dom-testing-library/api-helpers#within-and-getqueriesforelement-apis). | null |
+| `hydrate` | Used when the component has already been mounted and requires a rerender. Not needed for most people. The rerender function passed back to you does this already. | false |
+| `wrapper` | A parent component to wrap YourComponent. | null |
+
+| Returns | Description |
+| ------------- | ------------- |
+| `container`  | The HTML element the component is mounted to. |
+| `baseElement`  | The root HTML element to which the container is appended to. |
+| `debug` | Logs the baseElement using [prettyDom](https://testing-library.com/docs/dom-testing-library/api-helpers#prettydom). |
+| `unmount` |  Unmounts the component from the container. |
+| `rerender` | Calls render again passing in the original arguments and sets hydrate to true. |
+| `asFragment` | Returns the innerHTML of the container. |
+| `...queries` | Returns all [query functions](https://testing-library.com/docs/dom-testing-library/api-queries) to be used on the baseElement. If you pass in `query` arguments than this will be those, otherwise all. |
+
+###`cleanup`
+
+Unmounts the component from the container and destroys the container.
+
+📝 When you import anything from the library, this automatically runs after each test. If you'd
+ like to disable this then set `process.env.PTL_SKIP_AUTO_CLEANUP` to true when running your tests. 
+
+```jsx
+import { render, cleanup } from 'preact-testing-library-next';
+
+afterEach(() => { cleanup }); // Run it after each test.
+
+render (<YourComponent />, { arguments });
+cleanup(); // Or like this for more control. 
+```
+
+### `act`
+
+Just a convenience export that points to preact/test-utils/act. All renders and events being
+fired are wrapped in `act`, so you don't really need this. It's responsible for flushing all
+effects and rerenders after invoking it.
+ 
+📝 If you'd love to learn more, checkout [this explanation](https://github.com/threepointone/react-act-examples/blob/master/sync.md). 
+Even thought it's for React, it gives you an idea of why it's needed.
+
+### `fireEvent`
+
+Passes it to the @testing-library/dom [fireEvent](https://testing-library.com/docs/dom-testing-library/api-events).
+It's also wrapped in `act` so you don't need to worry about doing it.
+
+ 📝 Keep in mind mainly when using `h / Preact.createElement` that React uses a Synthetic
+  event system, and Preact uses the browser's native `addEventListener` for event handling. This
+  means events like `onChange` and `onDoubleClick` in React, are `onInput` and `onDblClick` in
+  Preact. The double click example will give you an idea of how to test using those functions.
+
+```jsx
+const cb = jest.fn();
+
+function Counter() {
+    useEffect(cb);
+
+    const [count, setCount] = useState(0);
+
+    return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
+  
+const { container: { firstChild: buttonNode }, } = render(<Counter />);
+
+// Clear the first call to useEffect that the initial render triggers.
+cb.mockClear();
+
+// Fire event Option 1.
+fireEvent.click(buttonNode);
+
+// Fire event Option 2.
+
+fireEvent(
+button,
+new Event('MouseEvent', {
+  bubbles: true,
+  cancelable: true,
+  button: 0,
+});
+
+expect(buttonNode).toHaveTextContent('1');
+expect(cb).toHaveBeenCalledTimes(1);
+```
+
+```jsx
+const handler = jest.fn();
+
+const { container: { firstChild: input } } = render(
+    (<input type="text" onInput={handler} />)
+);
+
+fireEvent.input(input, { target: { value: 'a' } });
+
+expect(handler).toHaveBeenCalledTimes(1);
+```
+
+```
+const ref = createRef();
+const spy = jest.fn();
+
+render(
+    h(elementType, {
+        'onDbClick': spy,
+        ref,
+    })
+);
+
+fireEvent['onDblClick'](ref.current);
+
+expect(spy).toHaveBeenCalledTimes(1);
+```
+
+### `dtl`
+
+Just a convenience export pointing to @testing-library/dom. See the [documentation](https://testing-library.com/docs/intro).
 
 ## Example
 
@@ -145,8 +269,7 @@ If you are interested in testing a custom hook, the preact-hooks-testing-library
 
 > It is not recommended to test single-use custom hooks in isolation from the components where it's
 > being used. It's better to test the component that's using the hook rather than the hook
-> itself. The preact-hooks-testing-library is intended to be used for reusable hooks
->/libraries.
+> itself. The preact-hooks-testing-library will be intended to be used for reusable hooks/libraries.
 
 ## Guiding Principles
 
@@ -168,11 +291,7 @@ state of the DOM.
     * [Events](https://testing-library.com/docs/dom-testing-library/api-events).
 
 Even though they are all React based examples, it should be close to identical in Preact. Take
- note of the [differences between React and Preact](https://preactjs.com/guide/v10/differences-to-react). 
- 
- 📝 Keep in mind that React uses a Synthetic event system, and Preact uses the
-browser's native `addEventListener` for event handling. This means events like `onChange` and
-`onDoubleClick` in React, are `onInput` and `onDblClick` in Preact. 
+ note of the [differences between React and Preact](https://preactjs.com/guide/v10/differences-to-react).
 
 ## Issues
 
