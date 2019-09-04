@@ -199,7 +199,7 @@ const spy = jest.fn();
 
 render(
     h(elementType, {
-        'onDbClick': spy,
+        'onDblClick': spy,
         ref,
     })
 );
