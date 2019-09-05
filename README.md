@@ -40,7 +40,7 @@ practices.</p>
   - [`cleanup`](#cleanup)
   - [`act`](#act)
   - [`fireEvent`](#fireevent)
-  - [`dtl`](#dtl)
+  - [`@testing-library/dom`](#testing-librarydom)
 - [Example](#example)
     - [Component](#component)
     - [Test](#test)
@@ -93,7 +93,7 @@ use [the custom jest matchers](https://github.com/testing-library/jest-dom).
 ```jsx
 import { render } from 'preact-testing-library-next';
 
-render (<YourComponent />, { arguments });
+const { returns } = render (<YourComponent />, { arguments });
 ```
 
 | Arguments | Description | Default |
@@ -124,9 +124,10 @@ Unmounts the component from the container and destroys the container.
 ```jsx
 import { render, cleanup } from 'preact-testing-library-next';
 
-afterEach(() => { cleanup }); // Run it after each test.
+afterEach(() => { cleanup }); // Default on import: runs it after each test.
 
-render (<YourComponent />, { arguments });
+render (<YourComponent />);
+
 cleanup(); // Or like this for more control. 
 ```
 
@@ -209,9 +210,10 @@ fireEvent['onDblClick'](ref.current);
 expect(spy).toHaveBeenCalledTimes(1);
 ```
 
-### `dtl`
+### `@testing-library/dom`
 
-Just a convenience export pointing to @testing-library/dom. See the [documentation](https://testing-library.com/docs/intro).
+This library re-exports everything from `@testing-library/dom`. See the [documentation](https://testing-library.com/docs/dom-testing-library/intro)
+to see what goodies you can use. The helper functions like `wait` can be particularly useful. 
 
 ## Example
 
