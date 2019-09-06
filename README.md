@@ -339,7 +339,6 @@ Thanks goes to these people ([emoji key][emojis]):
     <td align="center"><a href="https://github.com/mihar-22"><img src="https://avatars3.githubusercontent.com/u/14304599?s=460&v=4" width="100px;" alt="Rahim Alwer"/><br /><sub><b>Rahim Alwer</b></sub></a><br /><a href="https://github.com/mihar-22/preact-testing-library/commits?author=mihar-22" title="Code">💻</a> <a href="https://github.com/mihar-22/preact-testing-library/commits?author=mihar-22" title="Documentation">📖</a> <a href="https://github.com/mihar-22/preact-testing-library/commits?author=mihar-22" title="Tests">⚠️</a></td>
   </tr>
 </table>
-
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
