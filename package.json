@@ -84,11 +84,15 @@
     }
   },
   "lint-staged": {
+    "README.md": [
+      "npm run toc"
+    ],
+    ".all-contributorsrc": [
+      "npm run contributors:generate"
+    ],
     "**/*.js": [
       "npm run lint",
       "npm run test:update",
-      "npm run toc",
-      "npm run contributors:generate",
       "git add"
     ]
   },
