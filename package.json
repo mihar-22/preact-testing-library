@@ -1,6 +1,6 @@
 {
   "name": "preact-testing-library-next",
-  "version": "0.0.0-development",
+  "version": "0.0.0-semantically-released",
   "description": "Simple and complete Preact DOM testing utilities that encourage good testing practices.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
