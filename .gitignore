@@ -6,6 +6,7 @@ dist
 .DS_Store
 .eslintcache
 .size-snapshot.json
+.idea
 
 yarn-error.log
 package-lock.json
