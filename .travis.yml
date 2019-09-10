@@ -10,9 +10,11 @@ node_js:
 - '10'
 - '12'
 install: npm install
-script: npm run validate
 jobs:
   include:
+  - stage: test
+    node_js: '12'
+    script: npm run validate && npx codecov
   - stage: release
     node_js: '12'
     deploy:

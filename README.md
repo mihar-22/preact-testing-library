@@ -16,10 +16,12 @@ practices.</p>
 > Inspired completely by [react-testing-library][react-testing-library]
 
 [![Build Status][build-badge]][build]
+[![Code Coverage][coverage-badge]][coverage]
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs] 
 [![Code of Conduct][coc-badge]][coc]
 [![version][version-badge]][package]
+[![downloads][downloads-badge]][package]
 [![MIT License][license-badge]][license]
 [![Preact Slack Community][preact-slack-badge]][preact-slack]
 </div>
@@ -356,8 +358,11 @@ Contributions of any kind welcome!
 [node]: https://nodejs.org
 [build]: https://travis-ci.org/mihar-22/preact-testing-library-next
 [build-badge]: https://travis-ci.org/mihar-22/preact-testing-library.svg?branch=master
+[coverage-badge]: https://img.shields.io/codecov/c/github/mihar-22/preact-testing-library.svg?style=flat-square
+[coverage]: https://codecov.io/github/mihar-22/preact-testing-library
 [package]: https://www.npmjs.com/package/preact-testing-library-next
 [version-badge]: https://img.shields.io/npm/v/preact-testing-library-next
+[downloads-badge]: https://img.shields.io/npm/dw/preact-testing-library-next
 [slack]: https://preact-slack.now.sh
 [license]: https://github.com/mihar-22/preact-testing-library/blob/master/LICENSE
 [license-badge]: https://img.shields.io/github/license/mihar-22/preact-testing-library?color=b
