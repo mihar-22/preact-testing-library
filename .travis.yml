@@ -9,20 +9,15 @@ node_js:
 - '8'
 - '10'
 - '12'
+install: npm install
+script: npm run validate
 jobs:
   include:
-  - stage: install
-    script: npm install
-  - stage: validate
-    script: npm run validate
-  - stage: codecov
-    node_js: '12'
-    script: npx codecov
   - stage: release
     node_js: '12'
     deploy:
       provider: script
-      script: npx semantic-release
+      script: npx codecov && npx semantic-release
       skip_cleanup: true
 branches:
   only: master
