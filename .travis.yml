@@ -9,12 +9,15 @@ node_js:
 - '8'
 - '10'
 - '12'
-install: npm install
 jobs:
   include:
-  - stage: test
+  - stage: install
+    script: npm install
+  - stage: validate
+    script: npm run validate
+  - stage: codecov
     node_js: '12'
-    script: npm run validate && npx codecov
+    script: npx codecov
   - stage: release
     node_js: '12'
     deploy:
