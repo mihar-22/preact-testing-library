@@ -100,6 +100,8 @@
     ]
   },
   "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "moduleNameMapper": {
       "^react$": "preact/compat",
       "^react-dom$": "preact/compat"
