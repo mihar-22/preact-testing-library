@@ -13,15 +13,12 @@ module.exports = {
     'simple-import-sort',
   ],
   rules: {
-    'no-console': 'off',
-    'no-shadow': 'off',
     'max-len': ['warn', {'code': 100}],
     'comma-dangle': 'off',
     'no-underscore-dangle': 'off',
     'simple-import-sort/sort': 'error',
     'class-methods-use-this': 'off',
     'no-unused-vars': 'off',
-    'no-param-reassign': 'off',
     'max-classes-per-file': 'off',
   },
   globals: {
