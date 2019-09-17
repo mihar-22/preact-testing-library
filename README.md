@@ -357,7 +357,7 @@ Contributions of any kind welcome!
 
 [npm]: https://www.npmjs.com
 [node]: https://nodejs.org
-[build]: https://travis-ci.org/mihar-22/preact-testing-library-next
+[build]: https://travis-ci.org/mihar-22/preact-testing-library
 [build-badge]: https://travis-ci.org/mihar-22/preact-testing-library.svg?branch=master
 [coverage-badge]: https://img.shields.io/codecov/c/github/mihar-22/preact-testing-library.svg?style=flat-square
 [coverage]: https://codecov.io/github/mihar-22/preact-testing-library
