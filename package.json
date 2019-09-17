@@ -112,14 +112,6 @@
       "^react$": "preact/compat",
       "^react-dom$": "preact/compat"
     },
-    "coverageThreshold": {
-      "global": {
-        "branches": 95,
-        "functions": 95,
-        "lines": 95,
-        "statements": 95
-      }
-    },
     "watchPlugins": [
       "typeahead/filename",
       "typeahead/testname"
