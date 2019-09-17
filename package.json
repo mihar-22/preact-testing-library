@@ -32,9 +32,9 @@
     "pure.js"
   ],
   "scripts": {
-    "toc": "node_modules/.bin/doctoc README.md",
+    "toc": "npx doctoc README.md",
     "lint": "eslint src/**/*.js --fix",
-    "build": " node_modules/.bin/babel src --out-dir dist --ignore '**/__tests__/**,**/__mocks__/**'",
+    "build": " npx babel src --out-dir dist --ignore '**/__tests__/**,**/__mocks__/**'",
     "test": "jest src/__tests__ ",
     "test:watch": "npm run test -- --watch",
     "test:update": "npm run test -- --updateSnapshot --coverage",
