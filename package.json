@@ -91,6 +91,7 @@
   "lint-staged": {
     "README.md": [
       "yarn toc",
+      "prettier --parser markdown --write",
       "git add"
     ],
     ".all-contributorsrc": [
