@@ -55,15 +55,15 @@
     "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "@testing-library/jest-dom": "^4.1.0",
     "@types/jest": "^24.0.18",
     "all-contributors-cli": "^6.9.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "codecov": "^3.5.0",
-    "commitizen": "^4.0.3",
     "copyfiles": "^2.1.1",
-    "cz-conventional-changelog": "^3.0.2",
     "doctoc": "^1.4.0",
     "eslint": "^6.3.0",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -84,8 +84,8 @@
   },
   "husky": {
     "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
@@ -104,6 +104,9 @@
       "git add"
     ]
   },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"]
+  },
   "jest": {
     "moduleNameMapper": {
       "^react$": "preact/compat",
@@ -121,10 +124,5 @@
       "typeahead/filename",
       "typeahead/testname"
     ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
