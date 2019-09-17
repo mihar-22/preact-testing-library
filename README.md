@@ -24,6 +24,7 @@ practices.</p>
 [![downloads][downloads-badge]][package]
 [![MIT License][license-badge]][license]
 [![Preact Slack Community][preact-slack-badge]][preact-slack]
+[![Commitzen][commitzen-badge]][commitzen]
 </div>
 
 <hr />
@@ -381,4 +382,6 @@ Contributions of any kind welcome!
 [coc]: https://github.com/mihar-22/preact-testing-library/blob/master/CODE_OF_CONDUCT.md
 [preact-slack]: https://preact-slack.now.sh/
 [preact-slack-badge]: https://preact-slack.now.sh/badge.svg
+[commitzen]: http://commitizen.github.io/cz-cli/
+[commitzen-badge]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
 <!-- prettier-ignore-end -->

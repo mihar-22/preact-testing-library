@@ -61,7 +61,9 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "codecov": "^3.5.0",
+    "commitizen": "^4.0.3",
     "copyfiles": "^2.1.1",
+    "cz-conventional-changelog": "^3.0.2",
     "doctoc": "^1.4.0",
     "eslint": "^6.3.0",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -82,6 +84,7 @@
   },
   "husky": {
     "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
       "pre-commit": "lint-staged"
     }
   },
@@ -117,5 +120,10 @@
       "typeahead/filename",
       "typeahead/testname"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
