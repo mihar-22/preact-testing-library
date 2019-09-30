@@ -31,6 +31,7 @@
   ],
   "files": [
     "dist",
+    "warning.js",
     "dont-cleanup-after-each.js",
     "pure.js",
     "types/index.d.ts"
@@ -45,11 +46,13 @@
     "setup": "yarn && yarn validate",
     "validate": "npm-run-all lint test:update build",
     "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate"
+    "contributors:generate": "all-contributors generate",
+    "postinstall": "node warning.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@testing-library/dom": "^6.1.0"
+    "@testing-library/dom": "^6.1.0",
+    "colors": "^1.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",

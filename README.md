@@ -1,31 +1,9 @@
-<div align="center">
-<h1>Preact Testing Library</h1>
+# Warning
 
-<a href="https://www.emojione.com/emoji/1F429">
-  <img
-    height="80"
-    width="80"
-    alt="poodle"
-    src="https://raw.githubusercontent.com/mihar-22/preact-testing-library/master/other/poodle.png"
-  />
-</a>
+This library has now been **deprecated** and moved to the official
+[testing-library/preact](https://github.com/testing-library/preact-testing-library) repo.
 
-<p>Simple and complete Preact DOM testing utilities that encourage good testing
-practices.</p>
-
-> Inspired completely by [react-testing-library][react-testing-library]
-
-[![Build Status][build-badge]][build] [![Code Coverage][coverage-badge]][coverage]
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
-[![PRs Welcome][prs-badge]][prs] [![Code of Conduct][coc-badge]][coc]
-[![version][version-badge]][package] [![downloads][downloads-badge]][package]
-[![MIT License][license-badge]][license]
-[![Preact Slack Community][preact-slack-badge]][preact-slack]
-[![Commitzen][commitzen-badge]][commitzen]
-
-</div>
-
-<hr />
+---
 
 ## Table of Contents
 
@@ -47,10 +25,6 @@ practices.</p>
 - [Hooks](#hooks)
 - [Guiding Principles](#guiding-principles)
 - [Docs](#docs)
-- [Issues](#issues)
-  - [🐛 Bugs](#-bugs)
-  - [💡 Feature Requests](#-feature-requests)
-  - [❓ Questions](#-questions)
 - [Contributors](#contributors)
 - [LICENSE](#license)
 
@@ -73,6 +47,8 @@ practices. Its primary guiding principle is:
 > [The more your tests resemble the way your software is used, the more confidence they can give you.](https://twitter.com/kentcdodds/status/977018512689455106)
 
 ## Installation
+
+**WARNING: This library has been deprecated, please install `@testing-library/preact`.**
 
 This module is distributed via [npm][npm] which is bundled with [node][node] and should be installed
 as one of your project's `devDependencies`:
@@ -311,31 +287,6 @@ For more information checkout:
 
 Even though they are all React based examples, it should be close to identical in Preact. Take note
 of the [differences between React and Preact](https://preactjs.com/guide/v10/differences-to-react).
-
-## Issues
-
-_Looking to contribute? Look for the [Good First Issue][good-first-issue] label._
-
-### 🐛 Bugs
-
-Please file an issue for bugs, missing documentation, or unexpected behavior.
-
-[**See Bugs**][bugs]
-
-### 💡 Feature Requests
-
-Please file an issue to suggest new features. Vote on feature requests by adding a 👍. This helps
-maintainers prioritize what to work on.
-
-[**See Feature Requests**][requests]
-
-### ❓ Questions
-
-For questions related to using the library, please visit a support community instead of filing an
-issue on GitHub.
-
-- [Preact Slack][slack]
-- [Stack Overflow][stackoverflow]
 
 ## Contributors
 
